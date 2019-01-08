@@ -5,8 +5,7 @@ html,body{
   margin: 0;
   padding:0;
   height:100vh;
-  background: #95afc0;
-  
+  background: #95afc0; 
 }
 
 body {
@@ -35,11 +34,10 @@ code {
 
 .dashboard{
   margin: 0;
-  padding: 0;
   background:#b6b6bd;
-  height:85vh;
+  height:90vh;
   width:80%;
-  border-radius: 25px;
+  border-radius: 20px;
   overflow: hidden;
 }
 
@@ -58,34 +56,54 @@ code {
 }
 
 .form{
-  width:40%;
+  width:30%;
   position: relative;
+  text-align: center;
+  margin-right: 60px;
 }
 
-.search-bar input{
+.form input{
   all:none;
   background: #535c68;
   border:none;
   border-radius: 30px;
-  padding:10px 50px 10px 15px;
+  padding:10px 35px 10px 15px;
   color:#FFF;
   width:90%;
 }
 
-.search-bar input::placeholder{
+.form input::placeholder{
   color:#FFF;
 }
 
 .search-icon{
   position: absolute;
   top:7px;
-  right: 0;
+  right: -5px;
 }
 
 .menu{
   width:20%;
-  height:90%;
+  height:85%;
   float:left;
+  overflow-y: auto;
+}
+
+.menu ul{
+  list-style-type: none;
+}
+
+.menu ul li {
+  margin-left:0px;
+  padding-top:10px;
+  padding-bottom: 10px;
+  transition: margin-left .2s;
+}
+
+.menu ul li:hover{
+  cursor: pointer;
+  color:black;
+  margin-left: 10px;
 }
 
 .dashboard-content{
@@ -93,13 +111,16 @@ code {
   width: 80%;
   height:85%;
   float:right;
+  overflow-y: auto;
 }
+
+
 
 .movie-container{
   margin: 10px auto;
   width:95%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
@@ -108,4 +129,7 @@ code {
   width:30%;
   margin:10px;
   float:left;
+  text-align: center;
 }
+
+
