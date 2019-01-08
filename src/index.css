@@ -1,3 +1,11 @@
+html,body{
+  margin: 0;
+  padding:0;
+  height:100vh;
+  background: #95afc0;
+  
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -11,4 +19,44 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.container{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard{
+  margin: 0;
+  padding: 0;
+  background:#b6b6bd;
+  height:85vh;
+  width:80%;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.search-bar, .menu{
+  background: #130f40;
+}
+
+.search-bar{
+  width:100%;
+  height:15%;
+  border-bottom: 1.5px solid #4834d4;
+}
+
+.menu{
+  width:20%;
+  height:90%;
+  float:left;
+}
+
+.dashboard-content{
+  background:#30336b;
+  width: 80%;
+  height:85%;
+  float:right;
 }
