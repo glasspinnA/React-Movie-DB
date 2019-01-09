@@ -1,11 +1,17 @@
-$bg: #FFF;
-
-
+$background: #030217;
+$dashboardBackground: #04031D;
+$dashboardForeground: #1C194C;
+$dashboardDivider:#0c094f;
+$searchInputColor: lighten($dashboardBackground, 5%);
+$movieWrapperColor: $searchInputColor;
+$textColor: #1a1399;
+$formTextColor: lighten($textColor, 10%);
+$paginationTextColor: #878D9F;
 html,body{
   margin: 0;
   padding:0;
   height:100vh;
-  background: #95afc0; 
+  background: $background; 
 }
 
 body {
@@ -24,7 +30,7 @@ code {
 }
 
 .container{
-  color:#FFF;
+  color:$textColor;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -33,8 +39,8 @@ code {
 }
 
 .dashboard{
+  border:2px solid lighten($background, 7%);
   margin: 0;
-  background:#b6b6bd;
   height:90vh;
   width:80%;
   border-radius: 20px;
@@ -42,13 +48,13 @@ code {
 }
 
 .search-bar, .menu{
-  background: #130f40;
+  background: $dashboardBackground;
 }
 
 .search-bar{
   width:100%;
   height:15%;
-  border-bottom: 1.5px solid #4834d4;
+  border-bottom: 1.5px solid $dashboardDivider;
   align-content: center;
   justify-content: center;
   align-items: center;
@@ -64,16 +70,16 @@ code {
 
 .form input{
   all:none;
-  background: #535c68;
+  background: $searchInputColor;
   border:none;
   border-radius: 30px;
   padding:10px 35px 10px 15px;
-  color:#FFF;
+  color:$formTextColor;
   width:90%;
 }
 
 .form input::placeholder{
-  color:#FFF;
+  color:$formTextColor;
 }
 
 .search-icon{
@@ -102,19 +108,16 @@ code {
 
 .menu ul li:hover{
   cursor: pointer;
-  color:black;
   margin-left: 10px;
 }
 
 .dashboard-content{
-  background:#30336b;
+  background:$dashboardForeground;
   width: 80%;
   height:85%;
   float:right;
   overflow-y: auto;
 }
-
-
 
 .movie-container{
   margin: 10px auto;
@@ -126,13 +129,18 @@ code {
 
 .dashboard-content-movie{
   flex: 0 1 auto;
-  width:20.5%;
+  width:20%;
   margin:20px;
   text-align: center;
   border-radius: 10px;
   overflow: hidden;
+  height: auto;
+  background: $movieWrapperColor;
 }
 
+.dashboard-content-movie img{
+  width:100%;
+}
 
 .pagination{
   width:30%;
@@ -140,10 +148,11 @@ code {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin: 0px auto;
+  margin: 30px auto;
   padding: 0;
   border-radius: 20px;
   overflow: hidden;
+  background: lighten($dashboardBackground, 10%);
 }
 
 .itemClass{
@@ -151,10 +160,28 @@ code {
 }
 
 .activeClass{
-  background: green;
+  background: lighten($dashboardBackground, 5%);
 }
 
+
 .linkClass{
-  color: white;
+  color: $paginationTextColor;
   text-decoration: none;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

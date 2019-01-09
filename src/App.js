@@ -151,7 +151,7 @@ class App extends Component {
               onChange={(movieInput) => this.searchMovie(movieInput)}
               />
               <span class="search-icon">
-                <MaterialIcon icon="search" invert color="#FFF"/>
+                <MaterialIcon icon="search" invert color="#1a1399"/>
               </span>
             </div>
           </div>
@@ -168,14 +168,10 @@ class App extends Component {
             <div class="movie-container">
               {movieList.map(movie => (
                 <div class="dashboard-content-movie" key={movie.id}>
-                  <Fade left>
                     <img alt="No Poster Available" src={'http://image.tmdb.org/t/p/w185/'+ movie.poster_path} />
                     <br/>
-                    <p><strong>{movie.title}</strong></p>
-                    <br/>
-                    <p>{movie.vote_average}</p>
-                    <MaterialIcon icon="star" invert color="yellow"/>
-                  </Fade>
+                    <p><strong>{movie.title}</strong></p>                    
+                    <p>{movie.vote_average} ⭐</p>
                 </div>
               ))}
             </div>
@@ -188,8 +184,6 @@ class App extends Component {
               innerClass="pagination"
               activeClass="activeClass"
               itemClass="itemClass"
-              itemClassPrev="itemClassPrev"
-              itemClassNext="itemClassNext"
               linkClass="linkClass"
             />
           </div>
