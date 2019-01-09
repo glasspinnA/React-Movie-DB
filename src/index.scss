@@ -126,10 +126,35 @@ code {
 
 .dashboard-content-movie{
   flex: 0 1 auto;
-  width:30%;
-  margin:10px;
-  float:left;
+  width:20.5%;
+  margin:20px;
   text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 
+.pagination{
+  width:30%;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 0px auto;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.itemClass{
+  padding:12px;
+}
+
+.activeClass{
+  background: green;
+}
+
+.linkClass{
+  color: white;
+  text-decoration: none;
+}

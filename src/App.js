@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import MaterialIcon from 'material-icons-react';
 import Fade from 'react-reveal/Fade';
+import Pagination from "react-js-pagination";
+
 
 
 class App extends Component {
@@ -15,6 +17,8 @@ class App extends Component {
       isEmpty: true,
       movieQuery: undefined,
       movieCategory: undefined,
+      genreId: undefined,
+      activePage: 1,
     }
 
     this.timer = 0
@@ -22,6 +26,12 @@ class App extends Component {
 
   componentDidMount = async() =>{
     await this.fetchGenres()
+
+    /*
+    if(this.state.movieList.length === 0){
+      this.fetchMovieByGenre(null,12)
+    }
+    */
   }
 
   /**
@@ -31,9 +41,7 @@ class App extends Component {
     const url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US'
     await fetch(url)
     .then(res => res.json())
-    .then((result) => {
-      console.log(result.genres);
-      
+    .then((result) => {      
       this.setState({
         genreList: result.genres,
         isLoading: false,
@@ -49,9 +57,14 @@ class App extends Component {
    * Function for fetch movie by given genre
    */
   fetchMovieByGenre = async (event, genreId) => {
-    event.stopPropagation()
-
+    try{
+      event.stopPropagation()
+    }catch(error){
+      console.log(error);
+      
+    }
     this.setState({movieList:[]})
+
 
     const url = "https://api.themoviedb.org/3/discover/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US&with_genres=" + genreId
 
@@ -60,6 +73,7 @@ class App extends Component {
     .then((result) => {            
       this.setState({
         movieList: result.results,
+        genreId: genreId,
         isLoading:false,
         isEmpty:false,
       })
@@ -85,9 +99,7 @@ class App extends Component {
       const url = "https://api.themoviedb.org/3/search/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&query=" + movieQuery
       await fetch(url)
         .then(res => res.json())
-        .then((result) => { 
-          console.log(result);
-                     
+        .then((result) => {                      
           this.setState({
             movieList: result.results,
             isLoading:false,
@@ -100,6 +112,28 @@ class App extends Component {
     },300)
   }
 
+
+
+  
+  handlePageChange = async (pageNumber) => {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber,});
+
+    const url = "https://api.themoviedb.org/3/discover/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US&with_genres=" + this.state.genreId + "&page=" + pageNumber
+
+    await fetch(url)
+    .then(res => res.json())
+    .then((result) => {            
+      this.setState({
+        movieList: result.results,
+        isLoading:false,
+        isEmpty:false,
+      })
+    })
+    .catch((error) => {
+      alert(error.message)
+    })
+  }
 
   render() {
     const {movieList,genreList, isLoading} = this.state
@@ -145,6 +179,19 @@ class App extends Component {
                 </div>
               ))}
             </div>
+            <Pagination
+              activePage={this.state.activePage}
+              totalItemsCount={60}
+              pageRangeDisplayed={3}
+              itemsCountPerPage={20}
+              onChange={(item) => this.handlePageChange(item)}
+              innerClass="pagination"
+              activeClass="activeClass"
+              itemClass="itemClass"
+              itemClassPrev="itemClassPrev"
+              itemClassNext="itemClassNext"
+              linkClass="linkClass"
+            />
           </div>
         </div>
       </div>
