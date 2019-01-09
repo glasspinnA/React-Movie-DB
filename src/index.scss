@@ -7,6 +7,7 @@ $movieWrapperColor: $searchInputColor;
 $textColor: #1a1399;
 $formTextColor: lighten($textColor, 10%);
 $paginationTextColor: #878D9F;
+
 html,body{
   margin: 0;
   padding:0;
@@ -46,6 +47,8 @@ code {
   border-radius: 20px;
   overflow: hidden;
 }
+
+// ------------------------------------------ Search bar ----------------------------------------
 
 .search-bar, .menu{
   background: $dashboardBackground;
@@ -88,6 +91,8 @@ code {
   right: -5px;
 }
 
+// ------------------------------- Menu ------------------------------------------
+
 .menu{
   width:20%;
   height:85%;
@@ -110,6 +115,8 @@ code {
   cursor: pointer;
   margin-left: 10px;
 }
+
+// ------------------------------------- Dashboard -----------------------------------
 
 .dashboard-content{
   background:$dashboardForeground;
@@ -136,11 +143,20 @@ code {
   overflow: hidden;
   height: auto;
   background: $movieWrapperColor;
+  animation: fadeIn 2.5s;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 .dashboard-content-movie img{
   width:100%;
 }
+
+
+// ---------------------- Pagination -----------------------------------
 
 .pagination{
   width:30%;
@@ -169,6 +185,7 @@ code {
   text-decoration: none;
 }
 
+// ---------------------------- Custom Scrollbar -----------------------------------------
 
 ::-webkit-scrollbar {
   width: 10px;

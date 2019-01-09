@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MaterialIcon from 'material-icons-react';
-import Fade from 'react-reveal/Fade';
 import Pagination from "react-js-pagination";
-
-
 
 class App extends Component {
 
@@ -14,11 +11,12 @@ class App extends Component {
       genreList: [],
       movieList: [],
       isLoading: true,
-      isEmpty: true,
       movieQuery: undefined,
       movieCategory: undefined,
       genreId: undefined,
       activePage: 1,
+      totalPages: undefined,
+      totalResults: 1,
     }
 
     this.timer = 0
@@ -27,11 +25,10 @@ class App extends Component {
   componentDidMount = async() =>{
     await this.fetchGenres()
 
-    /*
     if(this.state.movieList.length === 0){
       this.fetchMovieByGenre(null,12)
     }
-    */
+    
   }
 
   /**
@@ -45,7 +42,6 @@ class App extends Component {
       this.setState({
         genreList: result.genres,
         isLoading: false,
-        isEmpty: true,
       })
     })
     .catch((error) => {
@@ -57,25 +53,25 @@ class App extends Component {
    * Function for fetch movie by given genre
    */
   fetchMovieByGenre = async (event, genreId) => {
+    this.setState({ activePage:1, movieList:[] })
+    
     try{
       event.stopPropagation()
     }catch(error){
       console.log(error);
-      
     }
-    this.setState({movieList:[]})
-
 
     const url = "https://api.themoviedb.org/3/discover/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US&with_genres=" + genreId
-
     await fetch(url)
     .then(res => res.json())
-    .then((result) => {            
+    .then((result) => {
+      console.log(result);
+                  
       this.setState({
         movieList: result.results,
         genreId: genreId,
         isLoading:false,
-        isEmpty:false,
+        totalResults: result.total_results,
       })
     })
     .catch((error) => {
@@ -90,36 +86,42 @@ class App extends Component {
   searchMovie = async (movie) => {
     const movieQuery = movie.target.value
     
-
     if(this.timer){
       clearTimeout(this.timer)
     }
 
     this.timer = setTimeout(async () =>{
-      const url = "https://api.themoviedb.org/3/search/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&query=" + movieQuery
-      await fetch(url)
-        .then(res => res.json())
-        .then((result) => {                      
-          this.setState({
-            movieList: result.results,
-            isLoading:false,
-            isEmpty:false
+      if(movieQuery.length > 1){
+        const url = "https://api.themoviedb.org/3/search/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&query=" + movieQuery
+        await fetch(url)
+          .then(res => res.json())          
+          .then((result) => {  
+            console.log(result);
+                                
+            this.setState({
+              movieList: result.results,
+              isLoading:false,
+              totalPages: result.total_pages,
+              totalResults: result.total_results
+            })
           })
-        })
-        .catch((error) => {
-          alert(error.message)
-        })
+          .catch((error) => {
+            alert(error.message)
+          })
+      }
     },300)
   }
 
 
-
-  
+  /**
+   * Function to handle API call when the user changes page within the movie section
+   */
   handlePageChange = async (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
-    this.setState({activePage: pageNumber,});
+    this.setState({ activePage: pageNumber });
 
-    const url = "https://api.themoviedb.org/3/discover/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US&with_genres=" + this.state.genreId + "&page=" + pageNumber
+    const urlSuffix = "https://api.themoviedb.org/3/discover/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US&with_genres="
+    const urlPrefix = this.state.genreId + "&page=" + pageNumber 
+    const url = urlSuffix + urlPrefix
 
     await fetch(url)
     .then(res => res.json())
@@ -127,7 +129,6 @@ class App extends Component {
       this.setState({
         movieList: result.results,
         isLoading:false,
-        isEmpty:false,
       })
     })
     .catch((error) => {
@@ -171,13 +172,13 @@ class App extends Component {
                     <img alt="No Poster Available" src={'http://image.tmdb.org/t/p/w185/'+ movie.poster_path} />
                     <br/>
                     <p><strong>{movie.title}</strong></p>                    
-                    <p>{movie.vote_average} ⭐</p>
+                    <p>{movie.vote_average} ⭐</p>                    
                 </div>
               ))}
             </div>
             <Pagination
               activePage={this.state.activePage}
-              totalItemsCount={60}
+              totalItemsCount={this.state.totalResults}
               pageRangeDisplayed={3}
               itemsCountPerPage={20}
               onChange={(item) => this.handlePageChange(item)}
