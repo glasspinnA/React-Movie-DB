@@ -14,6 +14,7 @@ class App extends Component {
       movieQuery: undefined,
       movieCategory: undefined,
       genreId: undefined,
+      genreName: undefined,
       activePage: 1,
       totalPages: undefined,
       totalResults: 1,
@@ -26,7 +27,7 @@ class App extends Component {
     await this.fetchGenres()
 
     if(this.state.movieList.length === 0){
-      this.fetchMovieByGenre(null,12)
+      this.fetchMovieByGenre(null,12,"Action")
     }
     
   }
@@ -52,21 +53,17 @@ class App extends Component {
   /**
    * Function for fetch movie by given genre
    */
-  fetchMovieByGenre = async (event, genreId) => {
-    this.setState({ activePage:1, movieList:[] })
+  fetchMovieByGenre = async (event, genreId, genreName) => {
+    this.setState({ activePage:1, movieList:[], genreName: genreName })
     
     try{
       event.stopPropagation()
-    }catch(error){
-      console.log(error);
-    }
+    }catch(error){}
 
     const url = "https://api.themoviedb.org/3/discover/movie?api_key=d50ecfa4de79b35a1cc43cc6ddcd1373&language=en-US&with_genres=" + genreId
     await fetch(url)
     .then(res => res.json())
-    .then((result) => {
-      console.log(result);
-                  
+    .then((result) => {                  
       this.setState({
         movieList: result.results,
         genreId: genreId,
@@ -144,31 +141,32 @@ class App extends Component {
       )
     }else{
       return(
-      <div class="container">
-        <div class="dashboard">
-          <div class="search-bar">
-            <div class="form">
+      <div className="container">
+        <div className="dashboard">
+          <div className="search-bar">
+            <div className="form">
               <input type="text" placeholder="Search Movie" 
               onChange={(movieInput) => this.searchMovie(movieInput)}
               />
-              <span class="search-icon">
+              <span className="search-icon">
                 <MaterialIcon icon="search" invert color="#1a1399"/>
               </span>
             </div>
           </div>
-          <div class="menu">
+          <div className="menu">
             <ul>
               {genreList.map(item => (
-                <li key={item.id} onClick={(event) => {this.fetchMovieByGenre(event,item.id)}}>
+                <li key={item.id} onClick={(event) => {this.fetchMovieByGenre(event,item.id, item.name)}}>
                   {item.name}
                 </li>
               ))}
             </ul>
           </div>
-          <div class="dashboard-content">
-            <div class="movie-container">
+          <div className="dashboard-content">
+            <h1>You want to see {this.state.genreName} tonight</h1>
+            <div className="movie-container">
               {movieList.map(movie => (
-                <div class="dashboard-content-movie" key={movie.id}>
+                <div className="dashboard-content-movie" key={movie.id}>
                     <img alt="No Poster Available" src={'http://image.tmdb.org/t/p/w185/'+ movie.poster_path} />
                     <br/>
                     <p><strong>{movie.title}</strong></p>                    
