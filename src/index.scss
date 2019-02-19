@@ -1,12 +1,12 @@
-$background: #030217;
-$dashboardBackground: #04031D;
-$dashboardForeground: #1C194C;
-$dashboardDivider:#0c094f;
-$searchInputColor: lighten($dashboardBackground, 5%);
-$movieWrapperColor: $searchInputColor;
-$textColor: #1a1399;
-$formTextColor: lighten($textColor, 10%);
-$paginationTextColor: #878D9F;
+$background: linear-gradient(to right top, #051937, #16275f, #3b3285, #6b36a8, #a32fc3);;
+$dashboardBackground: #20273E;
+$dashboardForeground: radial-gradient(circle, #20273e, #272e46, #2e364f, #363d57, #3d4560);
+$dashboardDivider:darken($dashboardBackground,4%);
+$searchInputColor: darken($dashboardBackground,6%);
+$movieWrapperColor: darken(#2c2c54,9%);
+$textColor: #f7f1e3;
+$formTextColor: $textColor;
+$paginationTextColor: rgb(220, 222, 228);
 
 html,body{
   margin: 0;
@@ -40,7 +40,7 @@ code {
 }
 
 .dashboard{
-  border:2px solid lighten($background, 7%);
+  border:3px solid $dashboardDivider;
   margin: 0;
   height:90vh;
   width:80%;
@@ -172,7 +172,7 @@ code {
   padding: 0;
   border-radius: 20px;
   overflow: hidden;
-  background: lighten($dashboardBackground, 10%);
+  //background: lighten($dashboardBackground, 10%);
 }
 
 .itemClass{
